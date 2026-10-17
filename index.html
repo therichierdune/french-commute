@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>출근길 프랑스어</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --text: #23262d;
+    --muted: #6d7380;
+    --line: #e1e5ee;
+    --accent: #2f5bb7;
+    --accent-soft: #e6edfb;
+    --good: #2e7d4f;
+    --good-soft: #e3f3e9;
+    --bad: #b3261e;
+    --bad-soft: #fbe4e2;
+    --recap: #fff6dc;
+    --recap-line: #ecd9a0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17191d;
+      --card: #212429;
+      --text: #e6e9ef;
+      --muted: #9aa1ad;
+      --line: #353a42;
+      --accent: #7fa3ff;
+      --accent-soft: #232c40;
+      --good: #6cc492;
+      --good-soft: #1f3328;
+      --bad: #f08a80;
+      --bad-soft: #3a2220;
+      --recap: #2f2a1c;
+      --recap-line: #5a4d2a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 20px 16px 60px; }
+  header .meta { color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; }
+  .progress { height: 6px; background: var(--line); border-radius: 3px; margin: 8px 0 18px; overflow: hidden; }
+  .progress > div { height: 100%; background: var(--accent); border-radius: 3px; transition: width .4s; }
+  h1 { font-size: 24px; line-height: 1.35; margin: 0 0 6px; }
+  .goal { color: var(--muted); margin: 0 0 20px; font-size: 15px; }
+  h2 { font-size: 18px; margin: 0 0 12px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px; margin-bottom: 16px; }
+  .recap { background: var(--recap); border-color: var(--recap-line); }
+  .recap ul { margin: 0; padding-left: 20px; }
+  .recap li { margin: 4px 0; }
+  .tip { background: var(--accent-soft); border-color: transparent; }
+  .tip::before { content: "💡 알아두기"; display: block; font-weight: 700; margin-bottom: 6px; }
+  .fr { font-size: 20px; }
+  .pron { font-size: 14px; color: var(--muted); }
+  .row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .row:first-of-type { border-top: none; }
+  .row .body { flex: 1; min-width: 0; }
+  .row .mean { color: var(--muted); font-size: 15px; }
+  .row .note { font-size: 13px; color: var(--accent); }
+  .say { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); font-size: 18px; cursor: pointer; }
+  .say:active { transform: scale(.92); }
+  .conj-verb { color: var(--muted); font-size: 15px; margin-bottom: 6px; }
+  .conj .row .fr b { color: var(--accent); }
+  .q { padding: 14px 0; border-top: 1px solid var(--line); }
+  .q:first-of-type { border-top: none; padding-top: 0; }
+  .q .qt { font-weight: 600; margin-bottom: 8px; }
+  .opts { display: grid; gap: 8px; }
+  .opt { text-align: left; font: inherit; color: var(--text); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); cursor: pointer; }
+  .opt.right { background: var(--good-soft); border-color: var(--good); }
+  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .opt:disabled { cursor: default; }
+  .exp { margin-top: 8px; font-size: 15px; }
+  .exp.right { color: var(--good); }
+  .exp.wrong { color: var(--bad); }
+  .done-btn { display: block; width: 100%; font: inherit; font-size: 19px; font-weight: 700; padding: 16px; border: none; border-radius: 14px; background: var(--accent); color: #fff; cursor: pointer; margin-top: 8px; }
+  .done-btn:disabled { opacity: .55; cursor: default; }
+  .done-msg { text-align: center; margin-top: 14px; }
+  .link-btn { font: inherit; background: none; border: none; color: var(--accent); text-decoration: underline; cursor: pointer; padding: 4px; }
+  footer { margin-top: 28px; color: var(--muted); font-size: 14px; }
+  footer select { font: inherit; width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); margin-top: 6px; }
+  .dlg-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .chip { font: inherit; font-size: 14px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--text); cursor: pointer; }
+  .who { flex: none; width: 44px; font-size: 13px; font-weight: 700; color: var(--accent); }
+  .hide-ko .mean.ko { visibility: hidden; }
+  .scene { color: var(--muted); font-size: 14px; margin: 0 0 6px; }
+  .fc { text-align: center; padding: 10px 0; }
+  .fc .face { font-size: 30px; min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .fc .back { min-height: 28px; color: var(--muted); margin: 6px 0 12px; }
+  .fc .btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .fc .btns button { font: inherit; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); cursor: pointer; }
+  .fc .count { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .listen-btn { font: inherit; font-size: 15px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--text); cursor: pointer; margin-bottom: 8px; }
+  .sub { color: var(--muted); font-size: 14px; margin: -6px 0 10px; }
+  .viewing-old { background: var(--line); border-radius: 8px; padding: 8px 12px; font-size: 14px; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<script src="lessons.js"></script>
+<script>
+  const KEY = "fr-commute-progress"; // 완료한 강의 수 (= 다음에 볼 강의 번호, 0부터)
+
+  function loadProgress() {
+    try { return Math.max(0, parseInt(localStorage.getItem(KEY) || "0", 10) || 0); }
+    catch (e) { return 0; }
+  }
+  function saveProgress(n) {
+    try { localStorage.setItem(KEY, String(n)); } catch (e) {}
+  }
+
+  const plain = s => s.replace(/<[^>]+>/g, "");
+
+  // 프랑스어 발음 듣기 (브라우저 내장 음성)
+  let frVoice = null;
+  function pickVoice() {
+    if (!("speechSynthesis" in window)) return;
+    const voices = speechSynthesis.getVoices();
+    frVoice = voices.find(v => v.lang && v.lang.replace("_", "-") === "fr-FR")
+      || voices.find(v => v.lang && v.lang.startsWith("fr")) || null;
+  }
+  if ("speechSynthesis" in window) {
+    pickVoice();
+    speechSynthesis.onvoiceschanged = pickVoice;
+  }
+  function utter(text, pitch) {
+    const u = new SpeechSynthesisUtterance(plain(text));
+    u.lang = "fr-FR";
+    u.rate = 0.85;
+    u.pitch = pitch || 1;
+    if (frVoice) u.voice = frVoice;
+    return u;
+  }
+  function speak(text) {
+    if (!("speechSynthesis" in window)) { alert("이 브라우저는 음성 듣기를 지원하지 않아요."); return; }
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter(text));
+  }
+  // 대화 전체 듣기: 말하는 사람마다 목소리 높이를 조금 다르게
+  function speakLines(lines) {
+    if (!("speechSynthesis" in window)) { alert("이 브라우저는 음성 듣기를 지원하지 않아요."); return; }
+    speechSynthesis.cancel();
+    const whos = [...new Set(lines.map(l => l.who))];
+    lines.forEach(l => speechSynthesis.speak(utter(l.fr, whos.indexOf(l.who) % 2 ? 1.3 : 0.9)));
+  }
+
+  const sayBtn = fr => `<button class="say" aria-label="발음 듣기" data-say="${encodeURIComponent(fr)}">🔊</button>`;
+  const pron = p => p ? `<div class="pron">[${p}]</div>` : "";
+
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const lessonWords = L => L.sections.filter(s => s.type === "words").flatMap(s => s.items);
+
+  // 보기 4개짜리 문제 만들기 (정답 + 같은 강의의 다른 단어 3개)
+  function makeChoice(words, w, field) {
+    const others = shuffle(words.filter(o => o !== w && o[field] !== w[field])).slice(0, 3);
+    const options = shuffle([w, ...others]);
+    return { options: options.map(o => o[field]), answer: options.indexOf(w) };
+  }
+
+  function quizItemHtml(q, qi, extra) {
+    return `
+      <div class="q" data-answer="${q.answer}" data-explain="${encodeURIComponent(q.explain || "")}">
+        <div class="qt">Q${qi + 1}. ${q.q}</div>
+        ${extra || ""}
+        <div class="opts">${q.options.map((o, oi) => `<button class="opt" data-i="${oi}">${o}</button>`).join("")}</div>
+        <div class="exp"></div>
+      </div>`;
+  }
+
+  function renderSection(s, L) {
+    if (s.type === "dialogue") {
+      const lines = s.lines.map(l => `
+        <div class="row">
+          <div class="who">${l.who}</div>
+          <div class="body">
+            <div class="fr">${l.fr}</div>
+            ${pron(l.pron)}
+            <div class="mean ko">${l.ko}</div>
+          </div>
+          ${sayBtn(l.fr)}
+        </div>`).join("");
+      return `<section class="card dlg"><h2>💬 ${s.title}</h2>
+        ${s.scene ? `<p class="scene">${s.scene}</p>` : ""}
+        <div class="dlg-tools">
+          <button class="chip" data-play-dlg>▶ 전체 듣기</button>
+          <button class="chip" data-toggle-ko>🙈 해석 가리기</button>
+        </div>
+        <div class="dlg-lines" data-lines="${encodeURIComponent(JSON.stringify(s.lines))}">${lines}</div></section>`;
+    }
+    if (s.type === "drill") {
+      const words = lessonWords(L).filter(w => !w.noDrill);
+      if (words.length < 4) return "";
+      const pick = shuffle(words).slice(0, Math.min(5, words.length));
+      const listen = pick.map((w, i) => {
+        const c = makeChoice(words, w, "mean");
+        return quizItemHtml({ q: "소리를 듣고 뜻을 고르세요", options: c.options, answer: c.answer, explain: w.fr + " = " + w.mean }, i,
+          `<button class="listen-btn" data-say="${encodeURIComponent(w.fr)}">🔊 듣기</button>`);
+      }).join("");
+      const pick2 = shuffle(words).slice(0, Math.min(5, words.length));
+      const reverse = pick2.map((w, i) => {
+        const c = makeChoice(words, w, "fr");
+        return quizItemHtml({ q: `'${w.mean}'는 프랑스어로?`, options: c.options, answer: c.answer, explain: w.fr + " = " + w.mean }, i);
+      }).join("");
+      return `
+        <section class="card"><h2>🃏 단어 카드</h2><p class="sub">프랑스어를 보고 뜻을 떠올린 뒤 카드를 뒤집어 보세요. 모르는 카드는 다시 나와요.</p><div class="fc" id="flashcards"></div></section>
+        <section class="card"><h2>🎧 듣기 퀴즈</h2><p class="sub">글자를 보지 말고 소리로만!</p>${listen}</section>
+        <section class="card"><h2>🔄 거꾸로 퀴즈</h2><p class="sub">뜻을 보고 프랑스어를 골라요.</p>${reverse}</section>`;
+    }
+    if (s.type === "text") {
+      return `<section class="card"><h2>${s.title}</h2><div>${s.body}</div></section>`;
+    }
+    if (s.type === "tip") {
+      return `<section class="card tip"><div>${s.body}</div></section>`;
+    }
+    if (s.type === "words") {
+      const rows = s.items.map(w => `
+        <div class="row">
+          <div class="body">
+            <div class="fr">${w.fr}</div>
+            ${pron(w.pron)}
+            <div class="mean">${w.mean}</div>
+            ${w.note ? `<div class="note">${w.note}</div>` : ""}
+            ${w.ex ? `<div class="mean" style="margin-top:4px">예) ${w.ex.fr} <button class="link-btn" style="padding:0 4px" data-say="${encodeURIComponent(w.ex.fr)}">🔊</button><br>　 ${w.ex.ko}</div>` : ""}
+          </div>
+          ${sayBtn(w.fr)}
+        </div>`).join("");
+      return `<section class="card"><h2>📖 ${s.title}</h2>${rows}</section>`;
+    }
+    if (s.type === "grammar") {
+      const ex = (s.examples || []).map(e => `
+        <div class="row">
+          <div class="body">
+            <div class="fr">${e.fr}</div>
+            ${pron(e.pron)}
+            <div class="mean">${e.ko}</div>
+          </div>
+          ${sayBtn(e.fr)}
+        </div>`).join("");
+      return `<section class="card"><h2>✏️ ${s.title}</h2><div>${s.body}</div><div style="margin-top:10px">${ex}</div></section>`;
+    }
+    if (s.type === "conj") {
+      const rows = s.items.map(c => `
+        <div class="row">
+          <div class="body">
+            <div class="fr">${c.p} <b>${c.f}</b></div>
+            ${pron(c.pron)}
+            ${c.ko ? `<div class="mean">${c.ko}</div>` : ""}
+          </div>
+          ${sayBtn(c.p + " " + c.f)}
+        </div>`).join("");
+      return `<section class="card conj"><h2>🔄 ${s.title}</h2><div class="conj-verb">${s.verb}</div>${rows}</section>`;
+    }
+    if (s.type === "quiz") {
+      const qs = s.items.map((q, qi) => quizItemHtml(q, qi)).join("");
+      return `<section class="card"><h2>❓ 확인 퀴즈</h2>${qs}</section>`;
+    }
+    return "";
+  }
+
+  let progress = loadProgress();
+  let viewing = Math.min(progress, LESSONS.length - 1);
+
+  function render() {
+    const app = document.getElementById("app");
+    const total = LESSONS.length;
+
+    if (progress >= total && viewing >= total) viewing = total - 1;
+    const allDone = progress >= total;
+    const L = LESSONS[viewing];
+    const prev = viewing > 0 ? LESSONS[viewing - 1] : null;
+    const isOld = viewing < progress;
+
+    const pct = Math.round(Math.min(progress, total) / total * 100);
+
+    let html = `
+      <header>
+        <div class="meta"><span>🥐 출근길 프랑스어 · ${viewing + 1}강</span><span>⏱ 약 10분</span></div>
+        <div class="progress"><div style="width:${pct}%"></div></div>
+      </header>`;
+
+    if (allDone && viewing === total - 1 && !window.__showLast) {
+      html += `
+        <section class="card" style="text-align:center">
+          <h1>🎉 준비된 ${total}강을 모두 끝냈어요!</h1>
+          <p>정말 대단해요. Claude에게 <b>"다음 강의 추가해 줘"</b>라고 말하면 이어서 만들어 줄 거예요.</p>
+          <button class="link-btn" id="showLast">마지막 강의 다시 보기</button>
+        </section>`;
+      html += footer(total);
+      app.innerHTML = html;
+      bind();
+      return;
+    }
+
+    if (isOld) html += `<div class="viewing-old">📚 지난 강의를 다시 보는 중이에요. <button class="link-btn" id="goCurrent">오늘 강의로 가기</button></div>`;
+
+    html += `<h1>${L.title}</h1><p class="goal">🎯 ${L.goal}</p>`;
+
+    if (prev) {
+      html += `<section class="card recap"><h2>🔁 지난 시간 요약 (${viewing}강)</h2>
+        <ul>${prev.summary.map(t => `<li>${t}</li>`).join("")}</ul></section>`;
+    } else {
+      html += `<section class="card recap"><h2>👋 환영해요!</h2>
+        <div>매일 출근길 10분, 한 강의씩 가볍게 가요. 다 보고 맨 아래 <b>완료</b>를 누르면, 다음에 열 때 자동으로 다음 강의가 나와요.</div></section>`;
+    }
+
+    html += L.sections.map(s => renderSection(s, L)).join("");
+
+    const alreadyDone = viewing < progress;
+    html += `
+      <button class="done-btn" id="done" ${alreadyDone ? "disabled" : ""}>${alreadyDone ? "✅ 이미 완료한 강의예요" : "✅ 오늘 강의 완료!"}</button>
+      <div class="done-msg" id="doneMsg"></div>`;
+
+    html += footer(total);
+    app.innerHTML = html;
+    bind();
+    setupFlashcards(lessonWords(L).filter(w => !w.noDrill));
+    window.scrollTo(0, 0);
+  }
+
+  function setupFlashcards(words) {
+    const box = document.getElementById("flashcards");
+    if (!box) return;
+    let queue = shuffle(words);
+    let known = 0;
+    function show() {
+      if (!queue.length) {
+        box.innerHTML = `<div class="face">🎉</div><div class="back">${words.length}장 모두 외웠어요!</div>
+          <div class="btns"><button id="fcAgain">처음부터 다시</button></div>`;
+        box.querySelector("#fcAgain").onclick = () => { queue = shuffle(words); known = 0; show(); };
+        return;
+      }
+      const w = queue[0];
+      box.innerHTML = `<div class="face fr">${w.fr}</div><div class="back"></div>
+        <div class="btns"><button data-a="say">🔊</button><button data-a="flip">👀 뜻 보기</button></div>
+        <div class="count">외운 카드 ${known} / ${words.length}</div>`;
+      const btns = box.querySelector(".btns");
+      btns.querySelector('[data-a="say"]').onclick = () => speak(w.fr);
+      btns.querySelector('[data-a="flip"]').onclick = () => {
+        box.querySelector(".back").textContent = w.mean + (w.pron ? `  [${w.pron}]` : "");
+        btns.innerHTML = `<button data-a="say">🔊</button><button data-a="no">🔁 다시 볼래요</button><button data-a="yes">⭕ 알았어요</button>`;
+        btns.querySelector('[data-a="say"]').onclick = () => speak(w.fr);
+        btns.querySelector('[data-a="no"]').onclick = () => { queue.push(queue.shift()); show(); };
+        btns.querySelector('[data-a="yes"]').onclick = () => { queue.shift(); known++; show(); };
+      };
+    }
+    show();
+  }
+
+  function footer(total) {
+    const opts = LESSONS.map((l, i) => {
+      const mark = i < progress ? "✅" : (i === progress ? "👉" : "　");
+      return `<option value="${i}" ${i === viewing ? "selected" : ""} ${i > progress ? "disabled" : ""}>${mark} ${i + 1}강. ${plain(l.title)}</option>`;
+    }).join("");
+    return `<footer>
+      강의 목록 (완료한 강의만 다시 볼 수 있어요)
+      <select id="list">${opts}</select>
+      <div style="margin-top:14px; text-align:right"><button class="link-btn" id="reset" style="font-size:13px; color:var(--muted)">진도 처음부터 다시 하기</button></div>
+    </footer>`;
+  }
+
+  function bind() {
+    document.querySelectorAll("[data-say]").forEach(b =>
+      b.addEventListener("click", () => speak(decodeURIComponent(b.dataset.say))));
+
+    document.querySelectorAll(".dlg").forEach(d => {
+      const lines = JSON.parse(decodeURIComponent(d.querySelector(".dlg-lines").dataset.lines));
+      d.querySelector("[data-play-dlg]").addEventListener("click", () => speakLines(lines));
+      const t = d.querySelector("[data-toggle-ko]");
+      t.addEventListener("click", () => {
+        const hidden = d.classList.toggle("hide-ko");
+        t.textContent = hidden ? "👀 해석 보기" : "🙈 해석 가리기";
+      });
+    });
+
+    document.querySelectorAll(".q").forEach(q => {
+      const answer = +q.dataset.answer;
+      const explain = decodeURIComponent(q.dataset.explain);
+      q.querySelectorAll(".opt").forEach(btn => btn.addEventListener("click", () => {
+        const picked = +btn.dataset.i;
+        q.querySelectorAll(".opt").forEach(o => { o.disabled = true; if (+o.dataset.i === answer) o.classList.add("right"); });
+        const exp = q.querySelector(".exp");
+        if (picked === answer) {
+          exp.className = "exp right"; exp.innerHTML = "⭕ 정답! " + explain;
+        } else {
+          btn.classList.add("wrong");
+          exp.className = "exp wrong"; exp.innerHTML = "❌ 아쉬워요. " + explain;
+        }
+      }));
+    });
+
+    const done = document.getElementById("done");
+    if (done) done.addEventListener("click", () => {
+      progress = Math.max(progress, viewing + 1);
+      saveProgress(progress);
+      done.disabled = true;
+      done.textContent = "✅ 완료했어요!";
+      const msg = document.getElementById("doneMsg");
+      if (progress < LESSONS.length) {
+        msg.innerHTML = `수고했어요! Bon travail ! 🙌<br>다음에 열면 <b>${progress + 1}강</b>이 바로 나와요.<br><button class="link-btn" id="goNext">지금 바로 다음 강의 보기</button>`;
+        document.getElementById("goNext").addEventListener("click", () => { viewing = progress; render(); });
+      } else {
+        msg.innerHTML = `🎉 준비된 강의를 모두 끝냈어요! Bravo !`;
+      }
+      document.getElementById("list").outerHTML = footer(LESSONS.length).match(/<select[\s\S]*?<\/select>/)[0];
+      document.getElementById("list").addEventListener("change", onList);
+    });
+
+    const list = document.getElementById("list");
+    if (list) list.addEventListener("change", onList);
+
+    const goCurrent = document.getElementById("goCurrent");
+    if (goCurrent) goCurrent.addEventListener("click", () => { viewing = Math.min(progress, LESSONS.length - 1); window.__showLast = false; render(); });
+
+    const showLast = document.getElementById("showLast");
+    if (showLast) showLast.addEventListener("click", () => { window.__showLast = true; render(); });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      if (confirm("진도를 1강부터 다시 시작할까요?")) { progress = 0; viewing = 0; saveProgress(0); render(); }
+    });
+  }
+
+  function onList(e) {
+    viewing = +e.target.value;
+    window.__showLast = true;
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>
